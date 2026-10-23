@@ -1,0 +1,22 @@
+
+# Python environment
+venv/
+.venv/
+
+# Generated vector database
+chroma_db_storage/
+
+# Secrets
+.env
+.env.*
+!.env.example
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# IDE files
+.vscode/
+
+# Source documents
+source_documents/

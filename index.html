@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Enterprise Search Engine</title>
+    <style>
+        body { font-family: sans-serif; background-color: #1a1a1a; color: white; padding: 40px; }
+        .box { max-width: 600px; margin: 0 auto; background: #2a2a2a; padding: 30px; border-radius: 8px; }
+        input { width: 80%; padding: 10px; border-radius: 4px; border: 1px solid #444; background: #333; color: white; }
+        button { padding: 10px 20px; border-radius: 4px; border: none; background: #04d361; font-weight: bold; cursor: pointer; }
+        #answer { margin-top: 20px; padding: 15px; background: #333; border-left: 4px solid #04d361; display: none; white-space: pre-wrap; }
+    </style>
+</head>
+<body>
+
+<div class="box">
+    <h2>Search Engine</h2>
+    <p>Type your question below to query your uploaded folder documentation.</p>
+    
+    <input type="text" id="question" placeholder="Ask a question...">
+    <button onclick="askAI()">Search</button>
+
+    <div id="loading" style="display:none; margin-top:10px;">AI is analyzing documents and formatting answer...</div>
+    <div id="answer"></div>
+</div>
+
+<script>
+    async function askAI() {
+        const query = document.getElementById('question').value;
+        if (!query) return;
+
+        document.getElementById('loading').style.display = 'block';
+        document.getElementById('answer').style.display = 'none';
+
+        try {
+            const response = await fetch('/search?q=' + encodeURIComponent(query));
+            const text = await response.text();
+            
+            document.getElementById('answer').innerText = text;
+            document.getElementById('answer').style.display = 'block';
+        } catch (error) {
+            alert("Could not connect to app.py backend server.");
+        } finally {
+            document.getElementById('loading').style.display = 'none';
+        }
+    }
+</script>
+
+</body>
+</html>
